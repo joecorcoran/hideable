@@ -24,8 +24,19 @@ This will add `hide`, `show`, `hidden?` and `visible?` instance methods to your 
 Hideable is designed to work in a similar way to the `:dependent` option on associations too, if that's what you want.
 
     class Foo < ActiveRecord::Base
+      has_one :bar
       hideable :dependent => :hide
     end
+    
+    class Bar < ActiveRecord::Base
+      belongs_to :foo
+      hideable
+    end
+
+All models that you wish to hide, including dependents, must be declared as `hideable`.
+
+    > foo.hide
+    > foo.bar.hidden? #=> true
 
 ## Why?
 

@@ -1,5 +1,7 @@
 # Hideable
 
+[![Build Status](https://secure.travis-ci.org/joecorcoran/hideable.png?branch=master)](http://travis-ci.org/joecorcoran/hideable)
+
 Not yet released.
 
 A simple way to provide hideability to ActiveRecord models. Mark records as hidden instead of destroying them for good.

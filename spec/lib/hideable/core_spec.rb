@@ -55,7 +55,7 @@ describe Hideable::Core do
       Timecop.freeze(datetime) do
         user.hide
       end
-      user.user_history.address.hidden_at.should eql datetime
+      user.address.hidden_at.should eql datetime
     end
     it "sets hidden_at for has_many through dependent" do
       post = Post.new

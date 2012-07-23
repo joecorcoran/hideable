@@ -35,13 +35,15 @@ module Hideable
 
       def update_hideable_dependent
         self.class.reflect_on_all_associations.each do |reflection|
-          if MACROS.include?(reflection.macro) && self.class.hideable_dependent == true
+
+          if MACROS.include?(reflection.macro) && reflection.options[:through].nil? && self.class.hideable_dependent == true
             dependent_records = Array(self.send(reflection.name)).compact
             dependent_records.each do |record|
               method = self.hidden? ? :hide : :show
               record.send(method) if record.respond_to?(method)
             end
           end
+
         end
       end
 

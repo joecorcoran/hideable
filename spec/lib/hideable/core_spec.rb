@@ -48,14 +48,15 @@ describe Hideable::Core do
       user.posts.first.hidden_at.should eql datetime
       user.posts.first.attachments.first.hidden_at.should eql datetime
     end
-    it "sets hidden_at for has_one through dependent", :address => true do
+    it "sets hidden_at for has_one through dependent" do
       user = User.new
       user.build_user_history
       user.user_history.build_address
       Timecop.freeze(datetime) do
         user.hide
       end
-      user.address.hidden_at.should eql datetime
+      user.user_history.hidden_at.should eql datetime
+      user.address.hidden_at.should be_nil
     end
     it "sets hidden_at for has_many through dependent" do
       post = Post.new
@@ -64,6 +65,7 @@ describe Hideable::Core do
         post.hide
       end
       post.taggings.first.hidden_at.should eql datetime
+      post.tags.first.hidden_at.should be_nil
     end
     it "sets hidden_at for has_and_belongs_to_many dependent" do
       post = Post.new

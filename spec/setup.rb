@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer :post_id
     t.integer :tag_id
   end
-  create_table :tags
+  create_table :tags do |t|
+    t.datetime :hidden_at
+  end
   create_table :mistakes
   create_table :photos do |t|
     t.datetime :hidden_at
@@ -77,6 +79,7 @@ class Like < ActiveRecord::Base
 end
 
 class Tag < ActiveRecord::Base
+  hideable
   has_many :taggings
   has_many :posts, :through => :taggings
 end

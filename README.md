@@ -19,7 +19,7 @@ Declare your models `hideable`:
       hideable
     end
     
-This will add `hide`, `show`, `hidden?` and `visible?` instance methods to your model.
+This will add `hide`, `show`, `hidden?` and `visible?` instance methods and `hidden` and `visible` class methods.
     
 Hideable is designed to work in a similar way to the `:dependent` option on associations too, if that's what you want.
 
@@ -35,6 +35,7 @@ Hideable is designed to work in a similar way to the `:dependent` option on asso
 
 All models that you wish to hide, including dependents, must be declared as `hideable`.
 
+    > foo = Foo.visible.first
     > foo.hide
     > foo.bar.hidden? #=> true
 

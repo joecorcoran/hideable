@@ -19,6 +19,9 @@ describe Hideable::ActiveRecord do
     it "adds instance methods to class when called" do
       Attachment.included_modules.should include Hideable::Core
     end
+    it "adds class methods to class when called" do
+      Attachment.singleton_class.included_modules.should include Hideable::Scope
+    end
     it "adds hide_dependent class_attribute with correct value when hideable macro is used" do
       Post.hideable_dependent.should be_true
       Attachment.hideable_dependent.should be_false

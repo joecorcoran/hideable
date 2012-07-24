@@ -18,11 +18,6 @@ describe Hideable::Core do
   end
 
   describe "#hide" do
-    after(:each) do
-      [User, UserHistory, Address, Post, Attachment, Like, Tag, Tagging, Photo].each do |klass|
-        klass.destroy_all
-      end
-    end
     it "sets hidden_at" do
       user = User.new
       Timecop.freeze(datetime) do

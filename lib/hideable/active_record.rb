@@ -3,6 +3,7 @@ module Hideable
   module ActiveRecord
 
     def hideable(options = {})
+      extend Hideable::Scope
       include Hideable::Core
       options = { :dependent => nil }.merge(options)
       class_attribute :hideable_dependent

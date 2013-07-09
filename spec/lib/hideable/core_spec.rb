@@ -17,11 +17,11 @@ describe Hideable::Core do
     end
   end
 
-  describe "#hide" do
+  describe "#hide!" do
     it "sets hidden_at" do
       user = User.new
       Timecop.freeze(datetime) do
-        user.hide
+        user.hide!
       end
       user.hidden_at.should eql datetime
     end
@@ -29,7 +29,7 @@ describe Hideable::Core do
       user = User.new
       user.build_user_history
       Timecop.freeze(datetime) do
-        user.hide
+        user.hide!
       end
       user.user_history.hidden_at.should eql datetime
     end
@@ -38,7 +38,7 @@ describe Hideable::Core do
       user.posts.build
       user.posts.first.attachments.build
       Timecop.freeze(datetime) do
-        user.hide
+        user.hide!
       end
       user.posts.first.hidden_at.should eql datetime
       user.posts.first.attachments.first.hidden_at.should eql datetime
@@ -48,7 +48,7 @@ describe Hideable::Core do
       user.build_user_history
       user.user_history.build_address
       Timecop.freeze(datetime) do
-        user.hide
+        user.hide!
       end
       user.user_history.hidden_at.should eql datetime
       user.address.hidden_at.should be_nil
@@ -57,7 +57,7 @@ describe Hideable::Core do
       post = Post.new
       post.tags.build
       Timecop.freeze(datetime) do
-        post.hide
+        post.hide!
       end
       post.taggings.first.hidden_at.should eql datetime
       post.tags.first.hidden_at.should be_nil
@@ -66,16 +66,16 @@ describe Hideable::Core do
       post = Post.new
       post.photos.build
       Timecop.freeze(datetime) do
-        post.hide
+        post.hide!
       end
       post.photos.first.hidden_at.should eql datetime
     end
   end
 
-  describe "#show" do
+  describe "#unhide!" do
     it "sets hidden_at to nil" do
       user = User.new(:hidden_at => datetime)
-      user.show
+      user.unhide!
       user.hidden_at.should be_nil
     end
   end

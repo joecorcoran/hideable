@@ -8,7 +8,7 @@ module Hideable
       options = { :dependent => nil }.merge(options)
       class_attribute :hideable_dependent
       self.hideable_dependent = (options[:dependent] == :hide) ? true : false
-      after_save :update_hideable_dependent
+      after_save :update_hideable_dependents
     end
 
   end

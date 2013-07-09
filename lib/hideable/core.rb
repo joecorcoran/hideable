@@ -34,6 +34,7 @@ module Hideable
       end
 
       def update_hideable_dependent
+      def update_hideable_dependents
         self.class.reflect_on_all_associations.each do |reflection|
           if MACROS.include?(reflection.macro) && reflection.options[:through].nil? && self.class.hideable_dependent == true
             dependent_records = Array(self.send(reflection.name)).compact

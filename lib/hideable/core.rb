@@ -8,39 +8,27 @@ module Hideable
       self.hidden_at.is_a?(DateTime)
     end
 
-    def visible?
-      !self.hidden?
-    end
-
-    def accept?(method)
-      method == :hide! ? visible? : hidden?
-    end
-
     def hide!
-      update_hideable_record
+      return if self.hidden?
+      self.hidden_at = DateTime.now
+      self.save!
     end
 
     def unhide!
-      update_hideable_record(:method => :unhide!)
+      return unless self.hidden?
+      self.hidden_at = nil
+      self.save!
     end
 
     private
 
-      def update_hideable_record(options = {})
-        options = { :method => :hide! }.merge(options)
-        return unless self.accept?(options[:method])
-        self.hidden_at = (options[:method] == :unhide!) ? nil : DateTime.now
-        self.save!
-      end
-
-      def update_hideable_dependent
       def update_hideable_dependents
         self.class.reflect_on_all_associations.each do |reflection|
           if MACROS.include?(reflection.macro) && reflection.options[:through].nil? && self.class.hideable_dependent == true
             dependent_records = Array(self.send(reflection.name)).compact
             dependent_records.each do |record|
-              method = self.hidden? ? :hide! : :unhide!
-              record.send(method) if record.respond_to?(method)
+              action = self.hidden? ? :hide! : :unhide!
+              record.send(action) if record.respond_to?(action)
             end
           end
         end

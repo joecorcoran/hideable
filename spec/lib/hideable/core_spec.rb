@@ -4,28 +4,26 @@ describe Hideable::Core do
 
   let(:datetime) { DateTime.new(2022,10,10,10,10,10,'+0') }
 
-  describe "predicates" do
-    it "when hidden_at is set" do
+  describe '#hidden?' do
+    it 'when hidden_at is set' do
       user = User.new(:hidden_at => datetime)
       user.hidden?.should be_true
-      user.visible?.should be_false
     end
-    it "when hidden_at is nil" do
+    it 'when hidden_at is nil' do
       user = User.new
       user.hidden?.should be_false
-      user.visible?.should be_true
     end
   end
 
-  describe "#hide!" do
-    it "sets hidden_at" do
+  describe '#hide!' do
+    it 'sets hidden_at' do
       user = User.new
       Timecop.freeze(datetime) do
         user.hide!
       end
       user.hidden_at.should eql datetime
     end
-    it "sets hidden_at for has_one dependent" do
+    it 'sets hidden_at for has_one dependent' do
       user = User.new
       user.build_user_history
       Timecop.freeze(datetime) do
@@ -33,7 +31,7 @@ describe Hideable::Core do
       end
       user.user_history.hidden_at.should eql datetime
     end
-    it "sets hidden_at for has_many dependent" do
+    it 'sets hidden_at for has_many dependent' do
       user = User.new
       user.posts.build
       user.posts.first.attachments.build
@@ -43,7 +41,7 @@ describe Hideable::Core do
       user.posts.first.hidden_at.should eql datetime
       user.posts.first.attachments.first.hidden_at.should eql datetime
     end
-    it "sets hidden_at for has_one through dependent" do
+    it 'sets hidden_at for has_one through dependent' do
       user = User.new
       user.build_user_history
       user.user_history.build_address
@@ -53,7 +51,7 @@ describe Hideable::Core do
       user.user_history.hidden_at.should eql datetime
       user.address.hidden_at.should be_nil
     end
-    it "sets hidden_at for has_many through dependent" do
+    it 'sets hidden_at for has_many through dependent' do
       post = Post.new
       post.tags.build
       Timecop.freeze(datetime) do
@@ -62,7 +60,7 @@ describe Hideable::Core do
       post.taggings.first.hidden_at.should eql datetime
       post.tags.first.hidden_at.should be_nil
     end
-    it "sets hidden_at for has_and_belongs_to_many dependent" do
+    it 'sets hidden_at for has_and_belongs_to_many dependent' do
       post = Post.new
       post.photos.build
       Timecop.freeze(datetime) do
@@ -72,8 +70,8 @@ describe Hideable::Core do
     end
   end
 
-  describe "#unhide!" do
-    it "sets hidden_at to nil" do
+  describe '#unhide!' do
+    it 'sets hidden_at to nil' do
       user = User.new(:hidden_at => datetime)
       user.unhide!
       user.hidden_at.should be_nil

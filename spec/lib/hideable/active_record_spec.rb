@@ -28,9 +28,9 @@ describe Hideable::ActiveRecord do
     Post.hidden.should_not include visible_post
   end
 
-  specify ".visible" do
-    Post.visible.should include visible_post
-    Post.visible.should_not include hidden_post
+  specify ".not_hidden" do
+    Post.not_hidden.should include visible_post
+    Post.not_hidden.should_not include hidden_post
   end
   
 end

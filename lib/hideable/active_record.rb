@@ -12,7 +12,7 @@ module Hideable
       where(self.arel_table[:hidden_at].not_eq(nil))
     end
 
-    def visible
+    def not_hidden
       where(self.arel_table[:hidden_at].eq(nil))
     end
 

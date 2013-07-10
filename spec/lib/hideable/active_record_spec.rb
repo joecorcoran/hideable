@@ -9,26 +9,26 @@ describe Hideable::ActiveRecord do
     class Like < ActiveRecord::Base; end
   end
   
-  describe ".hideable" do
-    it "adds instance methods to class when called" do
+  describe '.hideable' do
+    it 'adds instance methods to class when called' do
       Attachment.included_modules.should include Hideable::ActiveRecord::InstanceMethods
     end
-    it "adds class methods to class when called" do
+    it 'adds class methods to class when called' do
       [:hideable, :hidden, :visible].all? { |m| Attachment.methods.include?(m) }
     end
-    it "adds hide_dependent class_attribute with correct value when hideable macro is used" do
+    it 'adds hide_dependent class_attribute with correct value when hideable macro is used' do
       Post.hide_dependent.should be_true
       Attachment.hide_dependent.should be_false
       Like.should_not respond_to :hide_dependent
     end
   end
 
-  specify ".hidden" do
+  specify '.hidden' do
     Post.hidden.should include hidden_post
     Post.hidden.should_not include visible_post
   end
 
-  specify ".not_hidden" do
+  specify '.not_hidden' do
     Post.not_hidden.should include visible_post
     Post.not_hidden.should_not include hidden_post
   end

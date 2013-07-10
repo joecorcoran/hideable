@@ -44,7 +44,7 @@ All models that you wish to hide, including dependents, must be declared as `hid
 
 ## Why?
 
-Knowing that you can hide or unhide a record is often better destroying it for good. Other gems – such as [https://github.com/radar/paranoia](paranoia) (an update on (https://github.com/technoweenie/acts_as_paranoid)[acts_as_paranoid])) – do a similar job by overriding `#destroy`, which I don't like.
+Knowing that you can hide or unhide a record is often better destroying it for good. Other gems – such as [paranoia](https://github.com/radar/paranoia) and [acts_as_paranoid](https://github.com/technoweenie/acts_as_paranoid) – do a similar job by overriding `#destroy`, which I don't like.
 
 ## Development
 

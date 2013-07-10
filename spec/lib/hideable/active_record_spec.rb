@@ -10,7 +10,8 @@ describe Hideable::ActiveRecord do
       Attachment.included_modules.should include Hideable::ActiveRecord::InstanceMethods
     end
     it 'adds class methods to class when called' do
-      [:hideable, :hidden, :visible].all? { |m| Attachment.methods.include?(m) }
+      methods = [:hideable, :hidden, :not_hidden]
+      methods.all? { |m| Attachment.methods.include?(m) }.should be_true
     end
     it 'adds hide_dependent class_attribute with correct value when hideable macro is used' do
       Post.hide_dependent.should be_true

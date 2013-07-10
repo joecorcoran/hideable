@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 1) do
 end
 
 class User < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable :dependent => :hide
   has_many :posts
   has_one :user_history
@@ -48,18 +49,21 @@ class User < ActiveRecord::Base
 end
 
 class UserHistory <  ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   belongs_to :user
   has_one :address
 end
 
 class Address < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   belongs_to :user_history
   belongs_to :user
 end
 
 class Post < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable :dependent => :hide
   belongs_to :user
   has_many :attachments
@@ -70,6 +74,7 @@ class Post < ActiveRecord::Base
 end
 
 class Attachment < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   belongs_to :post
 end
@@ -79,22 +84,26 @@ class Like < ActiveRecord::Base
 end
 
 class Tag < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   has_many :taggings
   has_many :posts, :through => :taggings
 end
 
 class Tagging < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   belongs_to :post
   belongs_to :tag
 end
 
 class Photo < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
   has_and_belongs_to_many :posts
 end
 
 class Mistake < ActiveRecord::Base
+  extend Hideable::ActiveRecord
   hideable
 end

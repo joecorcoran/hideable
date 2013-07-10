@@ -3,16 +3,20 @@ module Hideable
   module ActiveRecord
 
     def hideable(options = {})
-      extend Hideable::Scope
-      include Hideable::Core
-      options = { :dependent => nil }.merge(options)
-      class_attribute :hideable_dependent
-      self.hideable_dependent = (options[:dependent] == :hide) ? true : false
+      send :include, Hideable::Core
+      class_attribute :hide_dependent
+      self.hide_dependent = options[:dependent] == :hide ? true : false
       after_save :update_hideable_dependents
+    end
+
+    def hidden
+      where(self.arel_table[:hidden_at].not_eq(nil))
+    end
+
+    def visible
+      where(self.arel_table[:hidden_at].eq(nil))
     end
 
   end
 
 end
-
-::ActiveRecord::Base.extend Hideable::ActiveRecord

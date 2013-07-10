@@ -2,31 +2,35 @@ require 'spec_helper'
 
 describe Hideable::ActiveRecord do
 
+  let(:hidden_post) { Post.create(:hidden_at => DateTime.new(2022,10,10,10,10,10,'+0')) }
+  let(:visible_post) { Post.create }
+
   before(:all) do
-    class Post < ActiveRecord::Base
-      hideable :dependent => :hide
-    end
-    class Attachment < ActiveRecord::Base
-      hideable
-    end
     class Like < ActiveRecord::Base; end
   end
   
-  describe "hideable class macro" do
-    it "is available to classes that inherit from ActiveRecord" do
-      Like.methods.should include :hideable
-    end
+  describe ".hideable" do
     it "adds instance methods to class when called" do
       Attachment.included_modules.should include Hideable::Core
     end
     it "adds class methods to class when called" do
-      Attachment.singleton_class.included_modules.should include Hideable::Scope
+      [:hideable, :hidden, :visible].all? { |m| Attachment.methods.include?(m) }
     end
     it "adds hide_dependent class_attribute with correct value when hideable macro is used" do
-      Post.hideable_dependent.should be_true
-      Attachment.hideable_dependent.should be_false
-      Like.should_not respond_to :hideable_dependent
+      Post.hide_dependent.should be_true
+      Attachment.hide_dependent.should be_false
+      Like.should_not respond_to :hide_dependent
     end
+  end
+
+  specify ".hidden" do
+    Post.hidden.should include hidden_post
+    Post.hidden.should_not include visible_post
+  end
+
+  specify ".visible" do
+    Post.visible.should include visible_post
+    Post.visible.should_not include hidden_post
   end
   
 end

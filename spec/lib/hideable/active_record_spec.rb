@@ -4,10 +4,6 @@ describe Hideable::ActiveRecord do
 
   let(:hidden_post) { Post.create(:hidden_at => DateTime.new(2022,10,10,10,10,10,'+0')) }
   let(:visible_post) { Post.create }
-
-  before(:all) do
-    class Like < ActiveRecord::Base; end
-  end
   
   describe '.hideable' do
     it 'adds instance methods to class when called' do

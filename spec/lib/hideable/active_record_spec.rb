@@ -11,7 +11,7 @@ describe Hideable::ActiveRecord do
   
   describe ".hideable" do
     it "adds instance methods to class when called" do
-      Attachment.included_modules.should include Hideable::Core
+      Attachment.included_modules.should include Hideable::ActiveRecord::InstanceMethods
     end
     it "adds class methods to class when called" do
       [:hideable, :hidden, :visible].all? { |m| Attachment.methods.include?(m) }

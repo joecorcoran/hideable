@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hideable::Core do
+describe Hideable::ActiveRecord::InstanceMethods do
 
   let(:datetime) { DateTime.new(2022,10,10,10,10,10,'+0') }
 

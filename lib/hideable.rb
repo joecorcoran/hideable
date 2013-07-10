@@ -1,3 +1,3 @@
 require "hideable/version"
-require "hideable/core"
 require "hideable/active_record"
+require "hideable/active_record/instance_methods"

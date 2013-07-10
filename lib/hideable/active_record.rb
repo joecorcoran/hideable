@@ -1,9 +1,8 @@
 module Hideable
-
   module ActiveRecord
 
     def hideable(options = {})
-      send :include, Hideable::Core
+      send :include, InstanceMethods
       class_attribute :hide_dependent
       self.hide_dependent = options[:dependent] == :hide ? true : false
       after_save :update_hideable_dependents
@@ -18,5 +17,4 @@ module Hideable
     end
 
   end
-
 end

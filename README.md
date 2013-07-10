@@ -39,7 +39,7 @@ Hideable is designed to work in a similar way to the `:dependent` option on asso
 All models that you wish to hide, including dependents, must be declared as `hideable`.
 
     > foo = Foo.not_hidden.first
-    > foo.hide
+    > foo.hide!
     > foo.bar.hidden? #=> true
 
 ## Why?

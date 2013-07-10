@@ -45,3 +45,17 @@ All models that you wish to hide, including dependents, must be declared as `hid
 ## Why?
 
 Knowing that you can hide or unhide a record is often better destroying it for good.
+
+## Development
+
+Install the general dependencies, including all the versions of `activerecord` that `hideable` is tested against.
+
+```
+$ bundle install && rake appraisal:install
+```
+
+Run tests as follows.
+
+```
+$ rake appraisal
+```

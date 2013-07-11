@@ -3,9 +3,9 @@ module Hideable
 
     def hideable(options = {})
       send :include, InstanceMethods
-      class_attribute :hide_dependent
-      self.hide_dependent = options[:dependent] == :hide ? true : false
-      after_save :update_hideable_dependents
+      class_attribute :hide_dependents
+      self.hide_dependents = options[:dependent] == :hide ? true : false
+      after_save :update_hideable_dependents!, :if => :update_hideable_dependents?
     end
 
     def hidden

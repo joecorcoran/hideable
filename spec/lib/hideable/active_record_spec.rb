@@ -14,9 +14,9 @@ describe Hideable::ActiveRecord do
       methods.all? { |m| Attachment.methods.include?(m) }.should be_true
     end
     it 'adds hide_dependent class_attribute with correct value when hideable macro is used' do
-      Post.hide_dependent.should be_true
-      Attachment.hide_dependent.should be_false
-      Like.should_not respond_to :hide_dependent
+      Post.hide_dependents.should be_true
+      Attachment.hide_dependents.should be_false
+      Like.should_not respond_to :hide_dependents
     end
   end
 

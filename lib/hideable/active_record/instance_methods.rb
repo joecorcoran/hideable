@@ -19,7 +19,7 @@ module Hideable
       end
 
       def update_hideable_dependents?
-        self.hidden_at_changed?
+        self.class.hide_dependents && self.hidden_at_changed?
       end
 
       def update_hideable_dependents!
@@ -38,11 +38,7 @@ module Hideable
 
         def update_reflected_record?(reflection)
           macros = [:has_many, :has_one, :has_and_belongs_to_many]
-          (
-            macros.include?(reflection.macro) &&
-            reflection.options[:through].nil? &&
-            self.class.hide_dependents == true
-          )
+          macros.include?(reflection.macro) && reflection.options[:through].nil?
         end
 
     end

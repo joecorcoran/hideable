@@ -29,5 +29,13 @@ describe Hideable::ActiveRecord do
     Post.not_hidden.should include visible_post
     Post.not_hidden.should_not include hidden_post
   end
+
+  describe ':updated option' do
+    it 'adds after_save callback to class' do
+      thing = Thing.new
+      thing.hide!
+      thing.foo.should be == 'bar'
+    end
+  end
   
 end

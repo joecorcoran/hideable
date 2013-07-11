@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer :photo_id
     t.integer :post_id
   end
+  create_table :things do |t|
+    t.datetime :hidden_at
+  end
 end
 
 class User < ActiveRecord::Base
@@ -106,4 +109,10 @@ end
 class Mistake < ActiveRecord::Base
   extend Hideable::ActiveRecord
   hideable
+end
+
+class Thing < ActiveRecord::Base
+  extend Hideable::ActiveRecord
+  hideable :updated => lambda { |thing| thing.foo = 'bar' }
+  attr_accessor :foo
 end

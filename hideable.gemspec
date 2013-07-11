@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'timecop',      '~> 0.6.1'
   s.add_development_dependency 'appraisal',    '~> 0.5.2'
 
-  s.files        = Dir['{lib}/**/*.rb'] + ['README.md']
+  s.files        = Dir['{lib}/**/*.rb'] + ['README.md', 'LICENSE.txt']
   s.require_path = 'lib'
 end

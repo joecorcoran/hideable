@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Joe Corcoran']
   s.email       = ['joecorcoran@gmail.com']
-  s.homepage    = 'http://github.com/joecorcoran/judge'
+  s.homepage    = 'http://github.com/joecorcoran/hideable'
   s.summary     = "Don't want to destroy your records? Hide them"
   s.description = 'Enables soft-deletion in ActiveRecord by marking records as hidden'
 

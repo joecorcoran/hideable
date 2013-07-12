@@ -113,6 +113,11 @@ end
 
 class Thing < ActiveRecord::Base
   extend Hideable::ActiveRecord
-  hideable :updated => lambda { |thing| thing.foo = 'bar' }
+  hideable :updated => :set_foo
   attr_accessor :foo
+
+  private
+    def set_foo
+      self.foo = 'bar'
+    end
 end

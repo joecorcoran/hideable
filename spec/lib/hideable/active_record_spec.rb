@@ -30,6 +30,20 @@ describe Hideable::ActiveRecord do
     Post.not_hidden.should_not include hidden_post
   end
 
+  describe ':dependent option' do
+    specify 'callback runs when hidden_at has changed' do
+      post = Post.new
+      post.should_receive(:update_hideable_dependents!).once
+      post.hide!
+    end
+    specify 'callback does not run when hidden_at has not changed' do
+      post = Post.new
+      post.user = User.new
+      post.should_not_receive(:update_hideable_dependents!)
+      post.save!
+    end
+  end
+
   describe ':updated option' do
     it 'adds after_save callback to class' do
       thing = Thing.new

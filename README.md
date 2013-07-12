@@ -54,14 +54,19 @@ foo.hide!
 foo.bar.hidden? #=> true
 ```
 
-Hiding dependents requires the records to be instantiated and can be quite expensive depending on the number of records. You can move the operation into the background where suitable. Instead of `:dependent => :hide`, use the `:updated` option to provide a callable that will be called when the object is hidden or unhidden. The following example demonstrates the use of [Sidekiq](http://github.com/mperham/sidekiq) to hide dependents asynchronously.
+Hiding dependents requires the records to be instantiated and can be quite expensive depending on the number of records. You can move the operation into the background where suitable. Instead of `:dependent => :hide`, use the `:updated` option to provide a method name or callable that will be called when the object is hidden or unhidden. The following example demonstrates the use of [Sidekiq](http://github.com/mperham/sidekiq) to hide dependents asynchronously.
 
 ```ruby
 class Foo < ActiveRecord::Base
   has_one :bar
 
   extend Hideable::ActiveRecord
-  hideable :updated => lambda { |foo| HideableWorker.perform_async(Foo.name, foo.id) }
+  hideable :updated => :update_bars
+
+  private
+    def update_bars
+      HideableWorker.perform_async(self.class.name, self.id)
+    end
 end
     
 class Bar < ActiveRecord::Base
